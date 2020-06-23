@@ -42,6 +42,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--链式事务管理器依赖包-->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-commons</artifactId>
+            <!--<version>1.13.7.RELEASE</version>-->
+        </dependency>
+        <!--链式事务管理器依赖包-->
     </dependencies>
 
     <build>

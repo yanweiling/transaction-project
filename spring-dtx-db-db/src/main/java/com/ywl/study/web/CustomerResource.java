@@ -19,12 +19,13 @@ public class CustomerResource {
     CustomerService customerService;
 
     @PostMapping("/order")
-    public void create(@RequestBody Order order){
+    public void create(@RequestBody Order order) {
         customerService.createOrder(order);
     }
 
     @GetMapping("/{id}")
-    public Map userInfo(@PathVariable Long id){
-       return customerService.userInfo(id);
+    public Map userInfo(@PathVariable Long id) {
+        return customerService.userInfo(id);
     }
 }
+

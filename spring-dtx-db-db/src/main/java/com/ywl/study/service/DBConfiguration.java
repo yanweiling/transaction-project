@@ -7,7 +7,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.transaction.ChainedTransactionManager;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -54,4 +57,14 @@ public class DBConfiguration {
         return new JdbcTemplate(orderDataSource);
     }
 
+    /*创建链式事务管理器*/
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        /*spirng 会从容器中获取userDataSource和orderDataSource 注入到DataSourceTransactionManager构造函数中*/
+        /*如果是userTm.setDataSource(xxx) 的话，则不是从容器中获取datasource*/
+        DataSourceTransactionManager userTm = new DataSourceTransactionManager(userDataSource());
+        DataSourceTransactionManager orderTm = new DataSourceTransactionManager(orderDataSource());
+        ChainedTransactionManager chainManager = new ChainedTransactionManager(orderTm, userTm);
+        return chainManager;
+    }
 }

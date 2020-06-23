@@ -37,12 +37,12 @@ public class CustomerService {
      */
 //    @Transactional(value = "orderDataSource", propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public void createOrder(Order order) {
-        orderJdbcTemplate.update(SQL_CREATE_ORDER, order.getCustomerId(), order.getTitle(), order.getAmount());
+        userJdbcTemplate.update(SQL_UPDATE_DEPOSIT, order.getAmount(), order.getCustomerId());
 
         if (order.getTitle().contains("error1")) {
             throw new RuntimeException("Error1");
         }
-        userJdbcTemplate.update(SQL_UPDATE_DEPOSIT, order.getAmount(), order.getCustomerId());
+        orderJdbcTemplate.update(SQL_CREATE_ORDER, order.getCustomerId(), order.getTitle(), order.getAmount());
         if (order.getTitle().contains("error2")) {
             throw new RuntimeException("Error2");
         }
